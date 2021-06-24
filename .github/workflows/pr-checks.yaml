@@ -16,5 +16,7 @@ jobs:
       run: |
         ls ${{ github.workspace }}
     - name: Run unit tests
+      env:
+        GH_TOKEN: ${{ secrets.GH_TOKEN }}
       run: python3 main.py
     
