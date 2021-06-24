@@ -1,0 +1,24 @@
+name: Python package
+
+on: [push]
+
+jobs: 
+  docker_build:
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      - name: pass dynamic secret
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: docker build  --build-arg github_token=${GH_TOKEN} . -t python-exercise:latest
+      - run: docker images
+      - run: docker tag python-exercise:latest docker.pkg.github.com/tmarella/python/exercise:1.0.0
+      - name: Login to GitHub Package Registry
+        env:
+          GITHUB_PACKAGE_REGISTRY_USERNAME: ${{ secrets.GH_USERNAME }}
+          GITHUB_PACKAGE_REGISTRY_PASSWORD: ${{ secrets.GH_TOKEN }}
+        run: echo "$GITHUB_PACKAGE_REGISTRY_PASSWORD" |docker login https://docker.pkg.github.com -u "$GITHUB_PACKAGE_REGISTRY_USERNAME" --password-stdin
+      - name: Push Images to GitHub Package Registry
+        run: docker push docker.pkg.github.com/tmarella/python/exercise:1.0.0
