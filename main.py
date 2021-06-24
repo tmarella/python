@@ -7,6 +7,7 @@ github_headers = {
     "Accept" : "application/vnd.github.v3+json",
     "Authorization" : "token " + os.getenv("GH_TOKEN")
     }
+print(github_headers)
 response = requests.request("GET",headers=github_headers,url=github_url)
 print(response.status_code)
 print(response.json())
