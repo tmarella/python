@@ -7,5 +7,12 @@ jobs:
   unit-testing:
     runs-on: ubuntu-latest
     steps:
-    - name: list files
-      run: ls
+    - name: List files in the workspace
+      run: |
+        ls ${{ github.workspace }}
+    - name: Check out repository code
+      uses: actions/checkout@v2
+    - name: List files in the workspace
+      run: |
+        ls ${{ github.workspace }}
+    
