@@ -15,4 +15,6 @@ jobs:
     - name: List files in the workspace
       run: |
         ls ${{ github.workspace }}
+    - name: Run unit tests
+      run: python3 main.py
     
